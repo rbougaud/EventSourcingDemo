@@ -1,0 +1,43 @@
+﻿@using Presentation.Pages.Student.Model
+@model EnrollStudentInputModel
+
+<div class="modal fade" id="enrollStudentModal" tabindex="-1" aria-labelledby="enrollStudentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="enrollStudentModalLabel">Inscrire un étudiant à des cours</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="EnrollStudent">
+                    <input type="hidden" asp-for="Id" id="enrollStudentId" />
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nom du cours</th>
+                                <th>Sélectionner</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.AvailableCourses.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        @Model.AvailableCourses[i].Name
+                                        <input type="hidden" asp-for="AvailableCourses[i].Name" />
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" asp-for="AvailableCourses[i].IsSelected" />
+                                        @* checked="@(@Model.EnrolledCourses!.TryGetValue(@Model.Id, out var enrolledCourses) && enrolledCourses.Contains(@Model.AvailableCourses[i].Name))" *@
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

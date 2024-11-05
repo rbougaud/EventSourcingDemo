@@ -1,0 +1,33 @@
+﻿@model Presentation.Pages.Student.Model.CreateStudentViewModel
+
+<div class="modal fade" id="addStudentModal" tabindex="-1" role="dialog" aria-labelledby="addStudentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addStudentModalLabel">Ajouter un étudiant</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="CreateStudent" id="addStudentForm" method="post">
+                    <div class="form-group">
+                        <label asp-for="FullName">Nom complet</label>
+                        <input asp-for="FullName" class="form-control" required />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email">Email</label>
+                        <input asp-for="Email" type="email" class="form-control" required />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DateOfBirth">Date de naissance</label>
+                        <input asp-for="DateOfBirth" type="date" class="form-control" required />
+                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                    </div>
+                    @* <input type="hidden" asp-for="EnrolledCourses" id="enrolledCourses" name="EnrolledCourses" /> *@
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

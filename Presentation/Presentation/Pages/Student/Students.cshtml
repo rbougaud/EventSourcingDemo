@@ -1,0 +1,100 @@
+﻿@page "/students"
+@using Presentation.Pages.Student.Model
+@model StudentsPageModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@{
+    ViewData["Title"] = "Gestion des étudiants";
+}
+
+<h2>Liste des étudiants</h2>
+
+<div class="mb-3">
+    <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addStudentModal">Ajouter un étudiant</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nom complet</th>
+                <th>Email</th>
+                <th>Date de naissance</th>
+                <th>Cours inscrits</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model.Students)
+            {
+                <tr>
+                    <td>@student.FullName</td>
+                    <td>@student.Email</td>
+                    <td>@student.DateOfBirth.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        @foreach (var course in student.EnrolledCourses)
+                        {
+                            <span>@course</span>
+                            <br />
+                        }
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editStudentModal" onclick="setEditModal('@student.Id', '@student.FullName', '@student.Email', '@student.DateOfBirth')">Modifier</button>
+                        <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#enrollStudentModal" onclick="setEnrollModal('@student.Id')">Ajouter cours</button>
+                        <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#unEnrollStudentModal" onclick="setUnEnrolledModal('@student.Id')">Supprimer cours</button>
+                        <input name="__RequestVerificationToken" type="hidden" value="@Antiforgery.GetTokens(HttpContext).RequestToken" />
+                        <button class="btn btn-warning" onclick="onDelete('@student.Id')">Supprimer</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function onDelete(studentId) {
+        if (confirm('Êtes-vous sûr de vouloir supprimer cet étudiant ?')) {
+            const formData = new FormData();
+            formData.append('id', studentId);
+            formData.append('__RequestVerificationToken', document.querySelector('input[name="__RequestVerificationToken"]').value);
+
+            fetch(`/students?handler=Delete`, {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    response.text().then(text => {
+                        console.error('Erreur lors de la suppression de l\'étudiant:', text);
+                        alert('Erreur lors de la suppression de l\'étudiant.');
+                    });
+                }
+            }).catch(error => {
+                console.error('Erreur lors de la suppression de l\'étudiant:', error);
+                alert('Erreur lors de la suppression de l\'étudiant.');
+            });
+        }
+    }
+
+    function setEditModal(id, fullName, email, dateOfBirth) {
+        document.getElementById('editStudentId').value = id;
+        document.getElementById('editStudentFullName').value = fullName;
+        document.getElementById('editStudentEmail').value = email;
+        document.getElementById('editStudentDateOfBirth').value = new Date(dateOfBirth).toISOString().substring(0, 10);
+    }
+
+    function setEnrollModal(id) {
+        document.getElementById('enrollStudentId').value = id;
+    }
+
+    function setUnEnrolledModal(id) {
+        document.getElementById('unEnrollStudentId').value = id;
+    }
+</script>
+
+@section AdditionalContent {
+    @await Html.PartialAsync("_AddStudentPartial", ViewData["CreateStudentModel"] as CreateStudentViewModel)
+    @await Html.PartialAsync("_UpdateStudentPartial", Model.ModelUpdate)
+    @await Html.PartialAsync("_EnrolledStudentPartial", Model.EnrollModel)
+    @await Html.PartialAsync("_UnEnrolledStudentPartial", Model.UnEnrollModel)
+}

@@ -1,0 +1,45 @@
+﻿@page
+@model Presentation.Pages.DefisEventSourcingModel
+@{
+    ViewData["Title"] = "Défis de l'Event Sourcing";
+}
+
+<section>
+    <h2>Introduction</h2>
+    <p>Bien que l'Event Sourcing offre de nombreux avantages, sa mise en place et sa pratique présentent également plusieurs défis. Cette page explore certains des principaux défis rencontrés par les développeurs et les architectes lorsqu'ils adoptent cette approche.</p>
+</section>
+
+<section>
+    <h2>Défis de l'Event Sourcing</h2>
+    <ul>
+        <li>
+            <h3>Complexité accrue</h3>
+            <p>L'Event Sourcing introduit une complexité supplémentaire dans le système, notamment en ce qui concerne la gestion des événements, la construction des projections et le maintien de la cohérence entre les différentes parties du système.</p>
+        </li>
+        <li>
+            <h3>Volume de données</h3>
+            <p>Le stockage de chaque changement d'état en tant qu'événement peut entraîner une explosion du volume de données, nécessitant des stratégies efficaces de gestion et de nettoyage des données.</p>
+        </li>
+        <li>
+            <h3>Reconstruction de l'état</h3>
+            <p>La reconstruction de l'état actuel à partir d'une longue séquence d'événements peut être coûteuse en termes de temps et de ressources, surtout pour les systèmes avec une longue histoire d'événements.</p>
+        </li>
+        <li>
+            <h3>Gestion des versions d'événements</h3>
+            <p>Lorsque le modèle de données évolue, il peut être difficile de gérer les versions d'événements et de maintenir la compatibilité avec les anciens événements.</p>
+        </li>
+        <li>
+            <h3>Garantir la cohérence</h3>
+            <p>Assurer la cohérence des données dans un système distribué basé sur l'Event Sourcing peut être complexe, nécessitant des mécanismes de gestion des transactions et des conflits.</p>
+        </li>
+        <li>
+            <h3>Apprentissage et adoption</h3>
+            <p>La courbe d'apprentissage pour adopter l'Event Sourcing peut être abrupte, nécessitant une formation et une adaptation des pratiques de développement pour les équipes habituées aux modèles de données traditionnels.</p>
+        </li>
+    </ul>
+</section>
+
+<section>
+    <h2>Conclusion</h2>
+    <p>Bien que l'Event Sourcing puisse apporter de nombreux avantages, il est essentiel de prendre en compte les défis potentiels et de planifier des stratégies pour les surmonter. Une bonne compréhension de ces défis et des meilleures pratiques pour les aborder peut aider à garantir le succès de la mise en place de l'Event Sourcing.</p>
+</section>

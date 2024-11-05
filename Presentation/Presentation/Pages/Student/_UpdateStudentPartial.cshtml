@@ -1,0 +1,31 @@
+﻿@using Presentation.Pages.Student.Model
+@model UpdateStudentInputModel
+
+<div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editStudentModalLabel">Modifier étudiant</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="UpdateStudent">
+                    <input type="hidden" asp-for="Id" id="editStudentId" />
+                    <div class="mb-3">
+                        <label for="editStudentFullName" class="form-label">Nom complet</label>
+                        <input type="text" class="form-control" id="editStudentFullName" asp-for="FullName" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="editStudentEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="editStudentEmail" asp-for="Email" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="editStudentDateOfBirth" class="form-label">Date de naissance</label>
+                        <input type="date" class="form-control" id="editStudentDateOfBirth" asp-for="DateOfBirth" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
